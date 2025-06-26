@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ shop.name }}</title>
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    {{ content_for_header }}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {% comment %} INSERT_YOUR_CODE {% endcomment %}
+  <!-- Alpine.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    {{ content_for_layout }}
+  </body>
+</html>
+
