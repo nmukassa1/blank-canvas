@@ -39,10 +39,10 @@
                   <button @click="updateItemQuantity(item.id, item.quantity + 1)">+</button>
                 </div>
                 <div>
-                    <template x-if="quantityUpdating">
+                    <template x-if="quantityUpdating[item.id]">
                       <span>Updating...</span>
                     </template>
-                    <template x-if="!quantityUpdating">
+                    <template x-if="!quantityUpdating[item.id]">
                       <span x-text="formatCurrency(item.line_price)"></span>
                     </template>
                 </div>
