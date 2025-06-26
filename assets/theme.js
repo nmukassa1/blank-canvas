@@ -1,7 +1,9 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("cart", () => ({
     cart: {},
+    quantityUpdating: false,
     async init() {
+      this.quantityUpdating = false;
       try {
         const response = await fetch("/cart.js");
         const data = await response.json();
@@ -42,10 +44,10 @@ document.addEventListener("alpine:init", () => {
       //Line Item Key Must be a string
       // Variant Id and be string or number
       try {
+        this.quantityUpdating = true;
         if (newQuantity < 1) {
           // Optional: remove item if quantity is 0
           console.log(`Removing item ${lineItemId} from cart`);
-
           await fetch("/cart/change.js", {
             method: "POST",
             headers: {
@@ -69,6 +71,8 @@ document.addEventListener("alpine:init", () => {
         await this.init(); // re-fetch and update UI
       } catch (error) {
         console.error(`Failed to update item ${lineItemId}:`, error);
+      } finally {
+        this.quantityUpdating = false;
       }
     },
 
