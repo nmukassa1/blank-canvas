@@ -5,6 +5,7 @@ document.addEventListener("alpine:init", () => {
       try {
         const response = await fetch("/cart.js");
         const data = await response.json();
+
         this.cart = data;
       } catch (error) {
         console.error("Failed to fetch cart", error);
@@ -35,6 +36,47 @@ document.addEventListener("alpine:init", () => {
 
       // Re-fetch cart to update the UI
       await this.init();
+    },
+
+    async updateItemQuantity(lineItemId, newQuantity) {
+      //Line Item Key Must be a string
+      // Variant Id and be string or number
+      try {
+        if (newQuantity < 1) {
+          // Optional: remove item if quantity is 0
+          console.log(`Removing item ${lineItemId} from cart`);
+
+          await fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: String(lineItemId), quantity: 0 }),
+          });
+        } else {
+          await fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: String(lineItemId),
+              quantity: newQuantity,
+            }),
+          });
+        }
+
+        await this.init(); // re-fetch and update UI
+      } catch (error) {
+        console.error(`Failed to update item ${lineItemId}:`, error);
+      }
+    },
+
+    formatCurrency(amount) {
+      return new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }).format(amount / 100);
     },
   }));
 });
