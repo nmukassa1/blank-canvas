@@ -75,6 +75,25 @@ document.addEventListener("alpine:init", () => {
       }
     },
 
+    // create a function that removes a line item from the cart
+    async removeItem(lineItemId) {
+      console.log(`Removing item ${lineItemId} from cart`);
+
+      try {
+        await fetch("/cart/change.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: String(lineItemId), quantity: 0 }),
+        });
+
+        await this.init(); // re-fetch and update UI
+      } catch (error) {
+        console.error(`Failed to remove item ${lineItemId}:`, error);
+      }
+    },
+
     formatCurrency(amount) {
       return new Intl.NumberFormat("en-GB", {
         style: "currency",
