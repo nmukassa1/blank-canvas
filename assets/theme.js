@@ -1,7 +1,15 @@
 document.addEventListener("alpine:init", () => {
-  Alpine.data("cart", () => ({
+  Alpine.store("cart", {
+    isOpen: false,
     cart: {},
     quantityUpdating: {},
+
+    toggleCartVisibility() {
+      console.log("Toggle cart visibility");
+
+      this.isOpen = !this.isOpen;
+    },
+
     async init() {
       try {
         const response = await fetch("/cart.js");
@@ -14,6 +22,30 @@ document.addEventListener("alpine:init", () => {
       }
     },
 
+    async addToCart(variantId, quantity = 1) {
+      console.log(`Adding item ${variantId} to cart with quantity ${quantity}`);
+
+      try {
+        await fetch("/cart/add.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: variantId, quantity }),
+        });
+
+        // Re-fetch cart to update the UI
+        await this.init();
+
+        this.isOpen = true; // Open cart after adding item
+        setTimeout(() => {
+          this.isOpen = false; // Close cart after 2 seconds
+        }, 2000);
+      } catch (error) {
+        console.error(`Failed to add item ${variantId} to cart:`, error);
+      }
+    },
+
     async clearCart() {
       await fetch("/cart/clear.js", {
         method: "POST",
@@ -23,19 +55,6 @@ document.addEventListener("alpine:init", () => {
       });
 
       // Re-fetch cart to update Alpine state
-      await this.init();
-    },
-
-    async addToCart(variantId, quantity = 1) {
-      const response = await fetch("/cart/add.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: variantId, quantity }),
-      });
-
-      // Re-fetch cart to update the UI
       await this.init();
     },
 
@@ -100,5 +119,5 @@ document.addEventListener("alpine:init", () => {
         currency: "GBP",
       }).format(amount / 100);
     },
-  }));
+  });
 });

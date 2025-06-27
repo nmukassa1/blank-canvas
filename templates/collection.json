@@ -1,8 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "canvas",
-      "settings": {}
+      "type": "collections"
     }
   },
   "order": ["main"]

@@ -1,0 +1,11 @@
+<header class="flex items-center justify-between">
+    <a href="/">{{ shop.name }}</a>
+
+    <nav>
+          {% for link in linklists.main-menu.links %}
+      {{ link.title | link_to: link.url }}
+    {% endfor %}
+    </nav>
+
+    {% render 'cartButton' %}
+</header>
