@@ -1,0 +1,49 @@
+<div x-data class="grid grid-cols-1 md:grid-cols-2">
+    {% comment %} Image {% endcomment %}
+    <div class="flex justify-center">
+        <img src="{{ product.featured_image | img_url: 'small' }}" alt="{{ product.title }}" class="w-1/2 h-auto">
+    </div>
+    {% comment %} Product Info {% endcomment %}
+    <div x-data="{ selectedVariant: '{{ product.first_available_variant }}' }">
+        <h1>{{ product.title }}</h1>
+        <ul>
+            {% for author in product.metafields.custom.authors %}
+                <li>{{ author }}</li>
+            {% endfor %}
+            <p>
+
+                {% comment %} {{ product.metafields.custom.authors }} {% endcomment %}
+            </p>
+        </ul>
+
+        <p>{{ product.price | money }}</p>
+
+        <form @submit.prevent >
+
+            <div x-data="{ selectedVariant: null }">
+    {% for variant in product.variants %}
+        <label 
+            for="{{ variant.id }}" 
+            :class="{ 'selected': selectedVariant === '{{ variant.id }}' }" 
+            class="cursor-pointer">
+            {{ variant.title }}
+            <input 
+                type="radio" 
+                name="variant_id" 
+                value="{{ variant.id }}" 
+                class="hidden" 
+                @change="selectedVariant = '{{ variant.id }}'">
+        </label>
+    {% endfor %}
+</div>
+                
+            <button
+                class="bg-blue-600 text-white px-3 py-1 mt-2 rounded"
+                @click="$store.cart.addToCart('{{ product.id}}', 1)"
+            >
+                Add to cart
+          </button> 
+        </form>
+    </div>
+
+</div>

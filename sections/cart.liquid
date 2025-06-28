@@ -44,7 +44,7 @@
 
           <div class="flex justify-between font-semibold mb-4">
             <span>Total:</span>
-            <span x-text="$store.cart.cart.total_price ? $store.cart.formatCurrency(cart.total_price) : $store.cart.formatCurrency(cart.total_price)"></span>
+            <span x-text="$store.cart.cart.total_price ? $store.cart.formatCurrency($store.cart.cart.total_price) : $store.cart.formatCurrency($store.cart.cart.total_price)"></span>
           </div>
 
         {% comment %} VIEW CART {% endcomment %}
