@@ -20,22 +20,26 @@
 
         <form @submit.prevent >
 
-            <div x-data="{ selectedVariant: null }">
-    {% for variant in product.variants %}
-        <label 
-            for="{{ variant.id }}" 
-            :class="{ 'selected': selectedVariant === '{{ variant.id }}' }" 
-            class="cursor-pointer">
-            {{ variant.title }}
-            <input 
-                type="radio" 
-                name="variant_id" 
-                value="{{ variant.id }}" 
-                class="hidden" 
-                @change="selectedVariant = '{{ variant.id }}'">
-        </label>
-    {% endfor %}
-</div>
+            <div class="flex items-center gap-4">
+                {% for variant in product.variants %}
+                    <label
+                    :for="'variant-' + {{ variant.id }}"
+                    :class="{ 'bg-black text-white': selectedVariant == '{{ variant.id }}' }"
+                    class="cursor-pointer block p-2 border rounded mb-1"
+                    >
+                    {{ variant.title }}
+                    <input
+                        type="radio"
+                        name="variant_id"
+                        :id="'variant-' + {{ variant.id }}"
+                        value="{{ variant.id }}"
+                        :checked="selectedVariant == '{{ variant.id }}'"
+                        @change="selectedVariant = '{{ variant.id }}'"
+                        class="sr-only"
+                    >
+                    </label>
+                {% endfor %}
+            </div>
                 
             <button
                 class="bg-blue-600 text-white px-3 py-1 mt-2 rounded"
