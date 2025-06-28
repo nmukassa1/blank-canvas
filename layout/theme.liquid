@@ -7,14 +7,17 @@
     <link rel="stylesheet" href="{{ 'styles.css' | asset_url }}">
     {{ content_for_header }}
 
+    <script src="{{ 'menu.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     {% comment %} INSERT_YOUR_CODE {% endcomment %}
-    <!-- Alpine.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+   
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
   </head>
   <body>
     {% section 'header' %}
@@ -22,6 +25,9 @@
     <main>
       {{ content_for_layout }}
     </main>
+
+     <!-- Alpine.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   </body>
 </html>
 

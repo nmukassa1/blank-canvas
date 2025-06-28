@@ -1,5 +1,4 @@
-<div>
-  <h1>Home Page</h1>
+<div class="page-padding">
 
   <div class="flex items-center justify-center gap-6 overflow-scroll">
 
@@ -15,5 +14,7 @@
     {% endfor %}
 
   </div>
+
+  {% render 'collection-grid', collection_obj: collections['fiction'] %}
 
 </div>
