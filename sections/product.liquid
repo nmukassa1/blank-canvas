@@ -15,7 +15,7 @@
 >
   <!-- Image -->
   <div class="flex justify-center">
-    <img :src="selectedVariant.featured_image?.src || '{{ product.featured_image | img_url: 'small' }}'" alt="{{ product.title }}" class="w-1/2 h-auto">
+    <img :src="selectedVariant.featured_image?.src || '{{ product.featured_image | img_url: 'large' }}'" alt="{{ product.title }}" class="w-1/2 h-auto">
   </div>
 
   <!-- Product Info -->
