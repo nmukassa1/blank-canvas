@@ -1,9 +1,9 @@
 {% liquid 
-  assign authors = product.metafields.custom.authors | escape 
+  assign authors = product.metafields.custom.authors | escape
 %}
 
 <script>
-  window.variants = {{ product.variants | json }};
+  window.variants = {{ product.variants | json }}
 </script>
 
 <div 
@@ -20,17 +20,18 @@
 
   <!-- Product Info -->
   <div x-data="$store.cart">
-    <h1>{{ product.title }}</h1>
+    <h1 class="text-2xl">{{ product.title }}</h1>
 
-    <ul>
-      {% for author in authors %}
-        <li>{{ author }}</li>
-      {% endfor %}
+    
+    <ul class="">
+    {% for author in authors %}
+        <li>{{ author | strip }}</li>
+    {% endfor %}
     </ul>
 
-    <p x-text="$store.cart.formatCurrency(selectedVariant.price)"></p>
+    <p class="my-4 text-xl" x-text="$store.cart.formatCurrency(selectedVariant.price)"></p>
 
-    <form @submit.prevent>
+    <form @submit.prevent="$store.cart.addToCart(selectedVariant.id, 1)">
       <div class="flex items-center gap-4">
         {% for variant in product.variants %}
           <label
@@ -54,10 +55,16 @@
 
       <button
         class="bg-blue-600 text-white px-3 py-1 mt-2 rounded"
-        @click="$store.cart.addToCart(selectedVariant.id, 1)"
+       type="submit"
       >
         Add to cart
       </button>
     </form>
+
+    <div class="mt-6">
+        <h3 class="mb-2">Synposis</h3>
+        <p>{{ product.description }}</p>
+    </div>
+
   </div>
 </div>

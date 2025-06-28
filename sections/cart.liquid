@@ -12,7 +12,12 @@
         <ul>
             <template x-for="item in $store.cart.cart.items" :key="item.id">
               <li>
-                <span x-text="item.product_title"></span>
+                
+                <p>
+                  <span x-text="item.product_title"></span>
+                  -
+                 <span class="text-sm" x-text="'(' + item.variant_title + ')'"></span>
+                </p> 
 
                 <div class="flex items-center justify-between">
                   <div>
