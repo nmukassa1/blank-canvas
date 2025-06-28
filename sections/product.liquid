@@ -1,53 +1,50 @@
-<div x-data class="grid grid-cols-1 md:grid-cols-2">
-    {% comment %} Image {% endcomment %}
+<div x-data="{ selectedVariantId: '{{ product.first_available_variant.id }}' }" class="grid grid-cols-1 md:grid-cols-2">
+    <!-- Image -->
     <div class="flex justify-center">
         <img src="{{ product.featured_image | img_url: 'small' }}" alt="{{ product.title }}" class="w-1/2 h-auto">
     </div>
-    {% comment %} Product Info {% endcomment %}
-    <div x-data="{ selectedVariant: '{{ product.first_available_variant }}' }">
+
+    <!-- Product Info -->
+    <div>
         <h1>{{ product.title }}</h1>
+
+        {% assign authors = product.metafields.custom.authors | parse_json %}
         <ul>
-            {% for author in product.metafields.custom.authors %}
+            {% for author in authors %}
                 <li>{{ author }}</li>
             {% endfor %}
-            <p>
-
-                {% comment %} {{ product.metafields.custom.authors }} {% endcomment %}
-            </p>
         </ul>
 
         <p>{{ product.price | money }}</p>
 
-        <form @submit.prevent >
-
+        <form @submit.prevent>
             <div class="flex items-center gap-4">
                 {% for variant in product.variants %}
                     <label
-                    :for="'variant-' + {{ variant.id }}"
-                    :class="{ 'bg-black text-white': selectedVariant == '{{ variant.id }}' }"
-                    class="cursor-pointer block p-2 border rounded mb-1"
+                        :for="'variant-{{ variant.id }}'"
+                        :class="{ 'bg-black text-white': selectedVariantId == '{{ variant.id }}' }"
+                        class="cursor-pointer block p-2 border rounded mb-1"
                     >
-                    {{ variant.title }}
-                    <input
-                        type="radio"
-                        name="variant_id"
-                        :id="'variant-' + {{ variant.id }}"
-                        value="{{ variant.id }}"
-                        :checked="selectedVariant == '{{ variant.id }}'"
-                        @change="selectedVariant = '{{ variant.id }}'"
-                        class="sr-only"
-                    >
+                        {{ variant.title }}
+                        <input
+                            type="radio"
+                            name="variant_id"
+                            :id="'variant-{{ variant.id }}'"
+                            value="{{ variant.id }}"
+                            :checked="selectedVariantId == '{{ variant.id }}'"
+                            @change="selectedVariantId = '{{ variant.id }}'"
+                            class="sr-only"
+                        >
                     </label>
                 {% endfor %}
             </div>
-                
+
             <button
                 class="bg-blue-600 text-white px-3 py-1 mt-2 rounded"
-                @click="$store.cart.addToCart('{{ product.id}}', 1)"
+                @click="$store.cart.addToCart(selectedVariantId, 1)"
             >
                 Add to cart
-          </button> 
+            </button>
         </form>
     </div>
-
 </div>
