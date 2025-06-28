@@ -1,13 +1,19 @@
 
 <header class="flex items-center justify-between shadow-md mb-4 relative" x-data>
 
-    <button class="w-[40px] h-[20px] relative" @click="$store.menu.toggleMenuVisibility()">
-        <div class="bar h-[2px] w-full bg-black absolute top-0"></div>
-        <div class="bar h-[2px] w-full bg-black absolute top-1/2 -translate-y-1/2"></div>
-        <div class="bar h-[2px] w-full bg-black absolute bottom-0"></div>
-    </button>
-    
-    <a href="/">{{ shop.name }}</a>
+    <div class="flex items-center gap-4">
+        <button class="w-[40px] h-[20px] relative" @click="$store.menu.toggleMenuVisibility()">
+            <div class="bar h-[2px] w-full bg-black absolute top-0"></div>
+            <div class="bar h-[2px] w-full bg-black absolute top-1/2 -translate-y-1/2"></div>
+            <div class="bar h-[2px] w-full bg-black absolute bottom-0"></div>
+        </button>
+        
+        <div>
+            <a href="/">{{ shop.name }}</a>
+        </div>
+
+    </div>
+
     
     
     {% render 'cartButton' %}
