@@ -11,43 +11,53 @@
       {% comment %} Cart ITEMS {% endcomment %}
         <ul>
             <template x-for="item in $store.cart.cart.items" :key="item.id">
-              <li>
-                
-                <p>
-                  <span x-text="item.product_title"></span>
-                  -
-                 <span class="text-sm" x-text="'(' + item.variant_title + ')'"></span>
-                </p> 
+              <li class="flex gap-4">
 
-                <div class="flex items-center justify-between">
-                  <div>
-                    <button @click="$store.cart.updateItemQuantity(item.id, item.quantity - 1)">-</button>
+              <div>
+                <img :src="item.image" alt="" class="w-14 object-cover rounded">
+              </div>
 
-                    <input type="number" :value="item.quantity" @change="$store.cart.updateItemQuantity(item.id, $event.target.value)" @keyup.enter="$event.target.blur()" >
-
-                    <button @click="$store.cart.updateItemQuantity(item.id, item.quantity + 1)">+</button>
+              {% comment %} Variant name {% endcomment %}
+                <div class="grow">
+                  <p>
+                    <span x-text="item.product_title"></span>
+                    -
+                   <span class="text-sm" x-text="'(' + item.variant_title + ')'"></span>
+                  </p> 
+  
+                  {% comment %} Variant control {% endcomment %}
+                  <div class="flex items-center justify-between ">
+                    <div>
+                      <button @click="$store.cart.updateItemQuantity(item.id, item.quantity - 1)">-</button>
+  
+                      <input type="number" :value="item.quantity" @change="$store.cart.updateItemQuantity(item.id, $event.target.value)" @keyup.enter="$event.target.blur()" >
+  
+                      <button @click="$store.cart.updateItemQuantity(item.id, item.quantity + 1)">+</button>
+                    </div>
+  
+                    <form @submit.prevent="$store.cart.removeItem(item.id)">
+                      <button>Remove</button>
+                    </form>
+  
                   </div>
 
-                  <form @submit.prevent="$store.cart.removeItem(item.id)">
-                    <button>Remove</button>
-                  </form>
-
+                  {% comment %} Price {% endcomment %}
+                  <div>
+                      <template x-if="$store.cart.quantityUpdating[item.id]">
+                        <span>Updating...</span>
+                      </template>
+                      <template x-if="!$store.cart.quantityUpdating[item.id]">
+                        <span x-text="$store.cart.formatCurrency(item.line_price)"></span>
+                      </template>
+                  </div>
                 </div>
+                
 
-
-                <div>
-                    <template x-if="$store.cart.quantityUpdating[item.id]">
-                      <span>Updating...</span>
-                    </template>
-                    <template x-if="!$store.cart.quantityUpdating[item.id]">
-                      <span x-text="$store.cart.formatCurrency(item.line_price)"></span>
-                    </template>
-                </div>
               </li>
             </template>
           </ul>
 
-          <div class="flex justify-between font-semibold mb-4">
+          <div class="flex justify-between font-semibold mt-6 mb-3">
             <span>Total:</span>
             <span x-text="$store.cart.cart.total_price ? $store.cart.formatCurrency($store.cart.cart.total_price) : $store.cart.formatCurrency($store.cart.cart.total_price)"></span>
           </div>
