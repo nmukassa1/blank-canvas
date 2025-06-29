@@ -3,7 +3,7 @@
 <div class="page-padding">
   <h1 class="collection-header text-2xl font-bold mb-4">{{ collection.title }}</h1>
   
-  <p class="mt-4 mb-8 md:w-2/3">{{ collection.description |  strip_html }}</p>
+  <p class="collection_description mt-4 mb-8 md:w-2/3">{{ collection.description |  strip_html }}</p>
 
 </div>
 
@@ -35,6 +35,10 @@
   .collection-header {
     display: {% if section.settings.show_collection_header %}block{% else %}none{% endif %};
     text-align: {{ section.settings.align_collection_header }};
+  }
+  .collection_description {
+    margin: {% if  section.settings.align_collection_description == 'left' %} 0 auto 0 0 {% elsif section.settings.align_collection_description == 'right' %} 0 0 0 auto {% else %} 0 auto {% endif %};
+    text-align: {% if  section.settings.align_collection_description == 'left' %} left{% elsif section.settings.align_collection_description == 'right' %} right {% else %} center {% endif %};
   }
 </style>
 
@@ -74,7 +78,28 @@
             "label": "Right"
           }
         ]
+      },
+      {
+        "type": "radio",
+        "label": "Align Collection Description",
+        "id": "align_collection_description",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
       }
+     
     ]
   }
 {% endschema %}
