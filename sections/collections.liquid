@@ -1,14 +1,14 @@
 
 
 <div class="page-padding">
-  <h1 class="text-2xl font-bold mb-4">{{ collection.title }}</h1>
+  <h1 class="collection-header text-2xl font-bold mb-4">{{ collection.title }}</h1>
   
   <p class="mt-4 mb-8 md:w-2/3">{{ collection.description |  strip_html }}</p>
 
 </div>
 
 
-<div>
+<div class="section-bg">
   <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
     {% for product in collection.products %}
       <li class="border">
@@ -27,6 +27,17 @@
   </ul>
 </div>
 
+<style>
+  .section-bg {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .collection-header {
+    display: {% if section.settings.show_collection_header %}block{% else %}none{% endif %};
+    text-align: {{ section.settings.align_collection_header }};
+  }
+</style>
+
 
 {% schema %}
   {
@@ -36,6 +47,33 @@
         "type": "color",
         "label": "Background Color",
         "id": "background_color",
+        "default": "#fff"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show Collection Header",
+        "id": "show_collection_header",
+        "default": true
+      },
+      {
+        "type": "radio",
+        "label": "Align Collection Header",
+        "id": "align_collection_header",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
       }
     ]
   }
