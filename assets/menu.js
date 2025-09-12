@@ -4,6 +4,8 @@ document.addEventListener("alpine:init", () => {
 
     toggleMenuVisibility() {
       this.isOpen = !this.isOpen;
+      console.log("Menu is: ", this.isOpen);
+      
     },
   });
 });

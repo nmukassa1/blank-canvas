@@ -1,0 +1,21 @@
+{% comment %} 
+    Render a product card with an image, title, and price.
+    This snippet is used in various sections like featured products and collection grids.
+
+    Ussage:
+    {% render 'product-card', product: product %}
+
+{% endcomment %}
+
+<div class="border">
+    <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: '150x' }}" alt="{{ product.title }}" class="mx-auto my-4">
+
+        <div class="border-t-2 p-4">
+            <h3 class="text-lg font-semibold mt-2">{{ product.title }}</h3>
+            <p class="text-sm text-gray-500">
+                {{ product.price | money }}
+            </p>
+        </div>
+    </a>
+</div>

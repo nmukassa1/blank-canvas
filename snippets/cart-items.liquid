@@ -1,0 +1,5 @@
+<ul>
+  <template x-for="item in $store.cart.cart.items" :key="item.id">
+    {% render 'cart-item' %}
+  </template>
+</ul>

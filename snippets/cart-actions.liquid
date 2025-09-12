@@ -1,0 +1,11 @@
+<div>
+  <a href="/cart" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+    View Cart
+  </a>
+  <button 
+    @click="$store.cart.clearCart()" 
+    class="inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+  >
+    Clear Cart
+  </button>
+</div>

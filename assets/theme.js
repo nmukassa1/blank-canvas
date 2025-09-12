@@ -1,13 +1,13 @@
 document.addEventListener("alpine:init", () => {
+  /*------------------------ Cart Store ------------------------ */
   Alpine.store("cart", {
     isOpen: false,
     cart: {},
     quantityUpdating: {},
 
     toggleCartVisibility() {
-      console.log("Toggle cart visibility");
-
       this.isOpen = !this.isOpen;
+      console.log("Cart is: ", this.isOpen);
     },
 
     async init() {

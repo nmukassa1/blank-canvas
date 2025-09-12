@@ -1,0 +1,109 @@
+<div class="featured-products-wrapper">
+
+  <h1 class="featured-product-header page-padding text-center text-2xl font-bold mb-4">{{ section.settings.featured_product_title }}</h1>
+
+  <div>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+          {% if product %}
+            <li>
+              {% render 'product-card', product: product %}
+            </li>
+          {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+<style>
+  .featured-products-wrapper {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .featured-product-header {
+    display: {% if section.settings.show_featured_product_header %}block{% else %}none{% endif %};
+    text-align: {{ section.settings.align_featured_product_header }};
+    color: {{ section.settings.title_color }};
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Featured Products",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "Title"
+      },
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "featured_product_title",
+        "default": "Featured Products"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show Featured Product Header",
+        "id": "show_featured_product_header",
+        "default": true
+      },
+      {
+        "type": "select",
+        "label": "Align Collection Header",
+        "id": "align_featured_product_header",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Title Color",
+        "id": "title_color",
+        "default": "#000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Select Product"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 6,
+    "presets": [
+      {
+        "name": "Featured Products"
+      }
+    ]
+  }
+{% endschema %}

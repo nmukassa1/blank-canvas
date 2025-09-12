@@ -1,0 +1,124 @@
+<div class="hero-section">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'text' %}
+        <h1 class="hero-title">
+          {{ block.settings.hero_title }}
+        </h1>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+<style>
+    .hero-title {
+    text-align: {{ block.settings.align_title }};
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    max-width: {{ block.settings.max_width }}px;
+    margin: {{ block.settings.margin }};
+    padding: {{ block.settings.padding }};
+    color: {{ block.settings.text_color }};
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Hero Header",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Title",
+          "id": "hero_title",
+          "default": "Welcome to Our Store"
+        },
+        {
+          "type": "select",
+          "label": "Text Align",
+          "id": "align_title",
+          "default": "center",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        {
+          "type": "range",
+          "label": "Font Size (px)",
+          "id": "font_size",
+          "min": 12,
+          "max": 100,
+          "step": 1,
+          "default": 40
+        },
+        {
+          "type": "select",
+          "label": "Font Weight",
+          "id": "font_weight",
+          "default": "700",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra-bold" }
+          ]
+        },
+        {
+          "type": "range",
+          "label": "Max Width (px)",
+          "id": "max_width",
+          "min": 200,
+          "max": 1200,
+          "step": 10,
+          "default": 800
+        },
+        {
+          "type": "text",
+          "label": "Margin (CSS shorthand)",
+          "id": "margin",
+          "default": "0 auto"
+        },
+        {
+          "type": "text",
+          "label": "Padding (CSS shorthand)",
+          "id": "padding",
+          "default": "20px"
+        },
+        {
+          "type": "color",
+          "label": "Text Color",
+          "id": "text_color",
+          "default": "#333333"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "text",
+          "name": "Hero Header",
+          "settings": {
+            "hero_title": "This is a hero block!",
+            "align_title": "center",
+            "font_size": 40,
+            "font_weight": "700",
+            "max_width": 800,
+            "margin": "0 auto",
+            "padding": "20px",
+            "text_color": "#333333"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

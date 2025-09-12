@@ -1,0 +1,23 @@
+<div 
+  class="bg-gray-50 rounded shadow p-6 w-screen sm:w-[400px] fixed top-[60px] z-10 transition-all duration-200 sm:duration-300 ease-in"
+  :class="$store.cart.isOpen ? 'right-0' : '-right-full'"
+  x-data 
+  x-init="$store.cart.init()"
+>
+  <h2 class="text-xl font-bold mb-4">Cart</h2>
+
+  {% comment %} Items / Empty state {% endcomment %}
+  <div>
+    <template x-if="$store.cart.cart.total_price > 0">
+      <div>
+        {% render 'cart-items' %}
+        {% render 'cart-total' %}
+        {% render 'cart-actions' %}
+      </div>
+    </template>
+
+    <template x-if="$store.cart.cart.total_price === 0">
+      {% render 'cart-empty' %}
+    </template>
+  </div>
+</div>

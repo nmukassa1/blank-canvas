@@ -1,0 +1,38 @@
+<li class="flex gap-4">
+  <div>
+    <img :src="item.image" alt="" class="w-14 object-cover rounded">
+  </div>
+
+  <div class="grow">
+    <p>
+      <span x-text="item.product_title"></span>
+      - <span class="text-sm" x-text="'(' + item.variant_title + ')'"></span>
+    </p> 
+
+    <div class="flex items-center justify-between">
+      <div>
+        <button @click="$store.cart.updateItemQuantity(item.id, item.quantity - 1)">-</button>
+        <input 
+          type="number" 
+          :value="item.quantity" 
+          @change="$store.cart.updateItemQuantity(item.id, $event.target.value)" 
+          @keyup.enter="$event.target.blur()" 
+        >
+        <button @click="$store.cart.updateItemQuantity(item.id, item.quantity + 1)">+</button>
+      </div>
+
+      <form @submit.prevent="$store.cart.removeItem(item.id)">
+        <button>Remove</button>
+      </form>
+    </div>
+
+    <div>
+      <template x-if="$store.cart.quantityUpdating[item.id]">
+        <span>Updating...</span>
+      </template>
+      <template x-if="!$store.cart.quantityUpdating[item.id]">
+        <span x-text="$store.cart.formatCurrency(item.line_price)"></span>
+      </template>
+    </div>
+  </div>
+</li>
