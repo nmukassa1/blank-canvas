@@ -1,5 +1,5 @@
 {% liquid 
-  assign authors = product.metafields.custom.authors | escape
+  assign authors = product.metafields.custom.authors.value
 %}
 
 <script>
@@ -23,11 +23,13 @@
     <h1 class="text-2xl">{{ product.title }}</h1>
 
     
-    <ul class="">
-    {% for author in authors %}
-        <li>{{ author | strip }}</li>
-    {% endfor %}
-    </ul>
+    {% if authors.size > 0 %}
+      <p>
+        {% for author in authors %}
+          {{ author }} (author){% if forloop.last == false %}, {% endif %}
+        {% endfor %}
+      </p>
+    {% endif %}
 
     <p class="my-4 text-xl" x-text="$store.cart.formatCurrency(selectedVariant.price)"></p>
 
