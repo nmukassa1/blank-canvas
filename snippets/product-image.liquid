@@ -1,0 +1,8 @@
+<div class="flex flex-col items-center space-y-4">
+  <img 
+    :src="$store.product.selectedVariant.featured_image?.src || '{{ product.featured_image | img_url: 'large' }}'" 
+    alt="{{ product.title }}" 
+    class="w-full max-w-md rounded-lg shadow-lg object-contain"
+  >
+  {% render 'product-thumbnails' %}
+</div>

@@ -1,0 +1,12 @@
+<div class="flex space-x-2 overflow-x-auto">
+  <template x-for="variant in $store.product.variants" :key="variant.id">
+    <template x-if="variant.featured_image">
+      <img 
+        :src="variant.featured_image.src" 
+        class="w-16 h-16 object-cover rounded cursor-pointer border-2" 
+        :class="$store.product.selectedVariant.id === variant.id ? 'border-blue-600' : 'border-gray-200'" 
+        @click="$store.product.selectVariant(variant.id)"
+      >
+    </template>
+  </template>
+</div>

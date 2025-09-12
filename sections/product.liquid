@@ -1,97 +1,18 @@
-{% liquid 
-  assign authors = product.metafields.custom.authors.value
-%}
-
 <script>
-  window.variants = {{ product.variants | json }}
+  // Convert Shopify variants to JSON
+  const productVariants = {{ product.variants | json }};
 </script>
 
-<div 
-  x-data="{ 
-    selectedVariant: window.variants.find(v => v.id === {{ product.first_available_variant.id }}), 
-    variants: window.variants 
-  }" 
-  class="page-padding grid grid-cols-1 md:grid-cols-2 gap-8 py-8"
->
+<div x-init="$store.product.init(productVariants)" class="page-padding grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
   <!-- Product Images -->
-  <div class="flex flex-col items-center space-y-4">
-    <img 
-      :src="selectedVariant.featured_image?.src || '{{ product.featured_image | img_url: 'large' }}'" 
-      alt="{{ product.title }}" 
-      class="w-full max-w-md rounded-lg shadow-lg object-contain"
-    >
-    
-    <!-- Optional: Thumbnail carousel -->
-    <div class="flex space-x-2 overflow-x-auto">
-      <template x-for="variant in variants" :key="variant.id">
-        <template x-if="variant.featured_image">
-          <img 
-            :src="variant.featured_image.src" 
-            class="w-16 h-16 object-cover rounded cursor-pointer border-2" 
-            :class="selectedVariant.id === variant.id ? 'border-blue-600' : 'border-gray-200'" 
-            @click="selectedVariant = variant"
-          >
-        </template>
-      </template>
-    </div>
-  </div>
+  {% render 'product-image' %}
 
   <!-- Product Details -->
-  <div x-data="$store.cart" class="flex flex-col justify-start space-y-4">
-    
-    <!-- Title & Authors -->
-    <div>
-      <h1 class="text-3xl font-semibold">{{ product.title }}</h1>
-
-      {% if authors.size > 0 %}
-      <p class="text-gray-600 mt-1">
-        {% for author in authors %}
-          {{ author }} (author){% if forloop.last == false %}, {% endif %}
-        {% endfor %}
-      </p>
-      {% endif %}
-    </div>
-
-    <!-- Price -->
-    <p class="text-2xl font-bold text-blue-600" x-text="$store.cart.formatCurrency(selectedVariant.price)"></p>
-
-    <!-- Variant Selector -->
-    <div class="flex flex-wrap gap-2">
-      {% for variant in product.variants %}
-        <label 
-          :for="'variant-{{ variant.id }}'"
-          class="cursor-pointer px-3 py-2 border rounded transition-colors duration-200"
-          :class="{ 'bg-black text-white': selectedVariant.id == {{ variant.id }}, 'bg-white text-gray-800': selectedVariant.id != {{ variant.id }} }"
-        >
-          {{ variant.title }}
-          <input 
-            type="radio"
-            name="variant_id"
-            :id="'variant-{{ variant.id }}'"
-            value="{{ variant.id }}"
-            :checked="selectedVariant.id == {{ variant.id }}"
-            @change="selectedVariant = variants.find(v => v.id == {{ variant.id }})"
-            class="sr-only"
-          >
-        </label>
-      {% endfor %}
-    </div>
-
-    <!-- Add to Cart CTA -->
-    <form @submit.prevent="$store.cart.addToCart(selectedVariant.id, 1)" class="mt-4">
-      <button 
-        type="submit" 
-        class="w-full md:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition"
-      >
-        Add to Cart
-      </button>
-    </form>
-
-    <!-- Product Description / Synopsis -->
-    <div class="mt-6 text-gray-700">
-      <h3 class="text-lg font-semibold mb-2">Synopsis</h3>
-      <p class="prose max-w-none">{{ product.description }}</p>
-    </div>
-
+  <div class="flex flex-col justify-start space-y-4">
+    {% render 'product-title-authors' %}
+    {% render 'product-price' %}
+    {% render 'product-variants' %}
+    {% render 'product-add-to-cart' %}
+    {% render 'product-description' %}
   </div>
 </div>

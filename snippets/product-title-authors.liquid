@@ -1,0 +1,11 @@
+<div>
+  <h1 class="text-3xl font-semibold">{{ product.title }}</h1>
+
+  {% if authors.size > 0 %}
+    <p class="text-gray-600 mt-1">
+      {% for author in authors %}
+        {{ author }} (author){% if forloop.last == false %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+</div>

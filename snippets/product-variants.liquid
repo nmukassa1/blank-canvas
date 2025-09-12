@@ -1,0 +1,17 @@
+<div class="flex flex-wrap gap-2">
+  <template x-for="variant in $store.product.variants" :key="variant.id">
+    <label 
+      class="cursor-pointer px-3 py-2 border rounded transition-colors duration-200"
+      :class="$store.product.selectedVariant.id === variant.id ? 'bg-black text-white' : 'bg-white text-gray-800'"
+    >
+      <span x-text="variant.title"></span>
+      <input 
+        type="radio"
+        :value="variant.id"
+        :checked="$store.product.selectedVariant.id === variant.id"
+        @change="$store.product.selectVariant(variant.id)"
+        class="sr-only"
+      >
+    </label>
+  </template>
+</div>
