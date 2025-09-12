@@ -1,0 +1,20 @@
+<div class="nav-link">
+  <!-- Parent Link -->
+  <button
+    class="block w-full text-left p-4 flex items-center justify-between"
+    @click="$store.menu.setActiveParent({{ index }})"
+  >
+    <span>{{ link.title }}</span>
+    {% if link.links.size > 0 %}
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
+          <path d="M9 5l7 7-7 7" />
+        </svg>
+      </span>
+    {% endif %}
+  </button>
+
+  {% if link.links.size > 0 %}
+    {% render 'nav-menu-child', link: link, index: index %}
+  {% endif %}
+</div>

@@ -7,5 +7,15 @@ document.addEventListener("alpine:init", () => {
       console.log("Menu is: ", this.isOpen);
       
     },
+
+    activeParent: null,
+
+    setActiveParent(index) {
+      this.activeParent = this.activeParent === index ? null : index;
+    },
+  
+    closeParent() {
+      this.activeParent = null;
+    },
   });
 });
