@@ -1,20 +1,23 @@
 <div class="nav-link">
-  <!-- Parent Link -->
-  <button
-    class="block w-full text-left p-4 flex items-center justify-between"
-    @click="$store.menu.setActiveParent({{ index }})"
-  >
-    <span>{{ link.title }}</span>
-    {% if link.links.size > 0 %}
+  {% if link.links.size > 0 %}
+    <!-- Parent Link with children -->
+    <button
+      class="block w-full text-left p-4 flex items-center justify-between"
+      @click="$store.menu.setActiveParent({{ index }})"
+    >
+      <span>{{ link.title }}</span>
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
           <path d="M9 5l7 7-7 7" />
         </svg>
       </span>
-    {% endif %}
-  </button>
+    </button>
 
-  {% if link.links.size > 0 %}
     {% render 'nav-menu-child', link: link, index: index %}
+  {% else %}
+    <!-- Standard link if no children -->
+    <a href="{{ link.url }}" class="block w-full text-left p-4 hover:bg-gray-100 transition">
+      {{ link.title }}
+    </a>
   {% endif %}
 </div>
