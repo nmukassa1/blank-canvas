@@ -1,0 +1,169 @@
+{% comment %}
+  Hero Section
+  - Background image
+  - Two overlayed headings
+  - CTA button
+  - Customisable alignment, text size, colors
+{% endcomment %}
+
+<section 
+  class="hero relative w-full min-h-[80vh] flex items-center justify-center bg-cover bg-center"
+  style="background-image: url({{ section.settings.bg_image | image_url: width: 2000 }});"
+>
+  <div 
+    class="absolute inset-0 bg-black/40"></div> {# dark overlay for readability #}
+
+  <div 
+    class="relative container mx-auto px-6 flex flex-col gap-4"
+    style="
+      justify-content: {{ section.settings.vertical_alignment }};
+      align-items: {{ section.settings.horizontal_alignment }};
+      text-align: {{ section.settings.horizontal_alignment }};
+    "
+  >
+    {%- if section.settings.heading_1 != blank -%}
+      <h1 
+        class="font-bold"
+        style="font-size: {{ section.settings.heading_1_size }}px; color: {{ section.settings.heading_1_color }};"
+      >
+        {{ section.settings.heading_1 }}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.heading_2 != blank -%}
+      <h2 
+        class="font-medium"
+        style="font-size: {{ section.settings.heading_2_size }}px; color: {{ section.settings.heading_2_color }};"
+      >
+        {{ section.settings.heading_2 }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+      <a 
+        href="{{ section.settings.cta_link }}"
+        class="inline-block px-6 py-3 rounded-lg font-semibold transition"
+        style="background-color: {{ section.settings.cta_bg_color }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_size }}px;"
+      >
+        {{ section.settings.cta_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading 1",
+      "default": "Welcome to Our Store"
+    },
+    {
+      "type": "range",
+      "id": "heading_1_size",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading 1 size",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "heading_1_color",
+      "label": "Heading 1 color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading 2",
+      "default": "Shop the latest trends"
+    },
+    {
+      "type": "range",
+      "id": "heading_2_size",
+      "min": 14,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading 2 size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "heading_2_color",
+      "label": "Heading 2 color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button link"
+    },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA Button font size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "CTA Button background color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "Horizontal alignment",
+      "default": "center",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "default": "center",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "flex-end", "label": "Bottom" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section"
+    }
+  ]
+}
+{% endschema %}

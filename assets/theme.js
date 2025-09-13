@@ -15,6 +15,9 @@ document.addEventListener("alpine:init", () => {
         const response = await fetch("/cart.js");
         const data = await response.json();
 
+        console.log("Cart data: ", data);
+        
+
         this.cart = data;
       } catch (error) {
         console.error("Failed to fetch cart", error);
