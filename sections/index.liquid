@@ -1,20 +1,4 @@
 <div class="page-padding">
 
-  <div class="flex items-center justify-center gap-6 overflow-scroll">
-
-    {% for collection in collections  %}
-      <a href="{{ collection.url }}" class="shrink-0">
-        <div class="collection flex flex-col items-center">
-          {% if collection.image %}
-            <img src="{{ collection.image | img_url: 'small' }}" alt="">
-          {% endif %}
-          <h2>{{ collection.title }}</h2>
-        </div>
-      </a>
-    {% endfor %}
-
-  </div>
-
-  {% render 'collection-grid', collection_obj: collections['fiction'] %}
 
 </div>
